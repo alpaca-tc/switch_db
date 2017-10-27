@@ -15,6 +15,13 @@ module SwitchDb
         end
 
         puts ''
+      when :rm
+        reference = find_by_name(@args[:name])
+        Rm.new(reference).rm!
+        reference_set.remove_reference(reference)
+        reference_set.write_reference_set!
+
+        puts "Remove #{reference.name}"
       when :store
         reference = Reference.new(name: @args[:name], database_names: @args[:database_names], metadata: { created_at: Time.now })
         reference_set.add_reference(reference)
@@ -23,7 +30,7 @@ module SwitchDb
         reference_set.write_reference_set!
         puts "Store #{@args[:database_names]} to #{@args[:name]}"
       when :restore
-        reference = reference_set.find_by_name(@args[:name])
+        reference = find_by_name(@args[:name])
         Restore.new(reference).restore!
         puts "Restore #{reference.database_names} to #{reference.name}"
       else
@@ -32,6 +39,17 @@ module SwitchDb
     end
 
     private
+
+    def find_by_name(name)
+      reference = reference_set.find_by_name(name)
+
+      unless reference
+        puts "missing #{name}"
+        exit
+      end
+
+      reference
+    end
 
     def reference_set
       path = SwitchDb.configuration.cache_dir.join(SwitchDb.configuration.reference_set_filename)
