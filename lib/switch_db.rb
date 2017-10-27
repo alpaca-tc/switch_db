@@ -9,6 +9,7 @@ require 'switch_db/reference'
 require 'switch_db/reference_set'
 require 'switch_db/option_parser'
 require 'switch_db/rm'
+require 'switch_db/dialog'
 
 module SwitchDb
   def self.configuration

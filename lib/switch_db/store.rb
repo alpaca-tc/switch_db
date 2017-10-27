@@ -12,8 +12,17 @@ module SwitchDb
       FileUtils.mkdir_p(reference.full_path)
 
       reference.database_names.each do |database_name|
-        `mysqldump -u root -p #{database_name} > #{reference.database_path(database_name)}`
+        full_path = reference.database_path(database_name)
+        next if File.exists?(full_path) && !overwrite?
+
+        `mysqldump -u root -p #{database_name} > #{full_path}`
       end
+    end
+
+    private
+
+    def overwrite?
+      Dialog.question?("Overwrite existing file? #{reference.name}")
     end
   end
 end
