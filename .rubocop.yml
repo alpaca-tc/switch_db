@@ -1,0 +1,111 @@
+AllCops:
+  TargetRubyVersion: 2.4
+  DisplayCopNames: true
+Metrics/BlockNesting:
+  Enabled: false
+Metrics/ClassLength:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/ParameterLists:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+Metrics/LineLength:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false # blockの長さは機会的に判断するより、reviewで都度判断したほうがいいと思うため
+Metrics/ModuleLength:
+  Enabled: false # moduleも同様
+Style/AsciiComments:
+  Enabled: false
+Style/BlockDelimiters:
+  Exclude:
+    - 'spec/**/*'
+Style/RaiseArgs:
+  Enabled: false
+Style/Lambda:
+  Enabled: false
+Lint/AmbiguousRegexpLiteral:
+  Enabled: false
+Lint/HandleExceptions :
+  Enabled: false
+Style/StringLiterals:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Layout/MultilineOperationIndentation:
+  Enabled: false
+Style/AccessorMethodName:
+  Enabled: false
+Style/PredicateName:
+  Enabled: false
+Style/NestedTernaryOperator:
+  Enabled: false
+Style/AndOr:
+  Exclude:
+    - 'app/controllers/**/*'
+Rails/Date:
+  EnforcedStyle: flexible
+Style/BlockDelimiters:
+  Enabled: false
+Style/RescueModifier:
+  Enabled: false
+Style/DoubleNegation:
+  Enabled: false
+Lint/AmbiguousOperator:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+# 空のメソッドは1行で書けとか言われるが、可読性優先で複数行にしたい場合もある
+Style/EmptyMethod:
+  Enabled: false
+# rescue nil とか書きたい
+Style/RescueModifier:
+  Enabled: false
+# Gemfileの内容をABC順に並べろとか言われる…
+Bundler/OrderedGems:
+  Enabled: false
+# 100_000などとする桁数
+Style/NumericLiterals:
+  MinDigits: 7
+Style/GuardClause:
+  Enabled: false
+
+# できる限りAsciiで書くが、英語だと意味が揺れる場合は許容する
+# https://github.com/moneyforward/mf_cloud_platform/pull/636
+Style/AsciiIdentifiers:
+  Exclude:
+    - 'spec/models/journal_branch_side_spec.rb'
+    - 'spec/models/journal_branch_spec.rb'
+
+Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+# 変数が nil であることを考慮していないのでよくない
+# 検知された変数を吟味して `#to_i` を適切に追記できるなら使っても良い
+Style/NumericPredicate:
+  Enabled: false
+
+# DSLに対して適用した場合、可読性が悪くなることがあるため使用しない
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+# Hash#merge!の代わりに代入を強要するが、merge!の方が可読性がよいケースもあるため使用しない
+Performance/RedundantMerge:
+  Enabled: false
+
+# class/module定義時にネスト方法を強要するが、あまり重要ではないので使用しない
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# $LAST_MATCH_INFOなどは require 'english' をする必要がある
+Style/SpecialGlobalVars:
+  Enabled: false

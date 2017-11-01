@@ -32,5 +32,3 @@ module SwitchDb
     end
   end
 end
-
-

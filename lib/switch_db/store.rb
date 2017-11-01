@@ -13,7 +13,7 @@ module SwitchDb
 
       reference.database_names.each do |database_name|
         full_path = reference.database_path(database_name)
-        next if File.exists?(full_path) && !overwrite?
+        next if File.exist?(full_path) && !overwrite?
 
         `mysqldump -u root -p #{database_name} > #{full_path}`
       end

@@ -1,4 +1,5 @@
 # coding: utf-8
+
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'switch_db/version'
@@ -9,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['alpaca-tc']
   spec.email         = ['alpaca-tc@alpaca.tc']
 
-  spec.summary       = %q{Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{Write a longer description or delete this line.}
+  spec.summary       = 'Write a short summary, because Rubygems requires one.'
+  spec.description   = 'Write a longer description or delete this line.'
   spec.homepage      = 'https://github.com/alpaca-tc/switch_db'
   spec.license       = 'MIT'
 
