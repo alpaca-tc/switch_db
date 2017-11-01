@@ -21,6 +21,12 @@ RSpec.describe SwitchDb::OptionParser do
       it_behaves_like 'a option parser',
         %w[list],
         command: 'list'
+
+      it_behaves_like 'a option parser',
+        %w[config username:alpaca-tc password:],
+        command: 'config',
+        username: 'alpaca-tc',
+        password: ''
     end
   end
 end

@@ -5,5 +5,6 @@ module SwitchDb
     require 'switch_db/command/store'
     require 'switch_db/command/restore'
     require 'switch_db/command/rm'
+    require 'switch_db/command/config'
   end
 end

@@ -1,4 +1,5 @@
 require 'pathname'
+require 'fileutils'
 
 module SwitchDb
   class Configuration
@@ -15,7 +16,7 @@ module SwitchDb
       @user_name = 'root'
       @password = ''
 
-      load_from_config_file(cache_dir.join(reference_set_file))
+      load_from_config_file(configuration_full_path)
     end
 
     def reference_set_file_full_path
@@ -30,7 +31,24 @@ module SwitchDb
       }
     end
 
+    def write_configuration_file
+      FileUtils.mkdir_p(File.dirname(configuration_full_path))
+      File.write(configuration_full_path, to_h.to_yaml)
+    end
+
+    def configuration_keys
+      %i[
+        reference_set_file
+        user_name
+        password
+      ]
+    end
+
     private
+
+    def configuration_full_path
+      cache_dir.join(config_file)
+    end
 
     def load_from_config_file(path)
       yaml = YAML.load_file(path)

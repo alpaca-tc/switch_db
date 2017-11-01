@@ -15,10 +15,6 @@ module SwitchDb
     @configuration ||= Configuration.new
   end
 
-  def self.configuration=(value)
-    @configuration = value
-  end
-
   def self.run(argv)
     option_parser = SwitchDb::OptionParser.new(argv)
     args = option_parser.parse!
@@ -27,6 +23,13 @@ module SwitchDb
     Cli.run!(command, args)
   rescue SwitchDb::CommandNotFound => error
     $stderr.puts(error.message)
+    $stderr.puts
+    $stderr.puts(option_parser.option_parser.banner)
+  rescue SwitchDb::UnknownConfigurationKey => error
+    $stderr.puts(error.message)
+    $stderr.puts
+    $stderr.puts("Allowed configuration keys are #{configuration.configuration_keys.map(&:to_s)}")
+    $stderr.puts
     $stderr.puts(option_parser.option_parser.banner)
   end
 end
