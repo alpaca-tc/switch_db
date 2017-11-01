@@ -37,10 +37,12 @@ module SwitchDb
 
           Usage:
             switch_db list
+            switch_db rm <name>
             switch_db store <name> --database_names [database_names...]
             switch_db restore <name>
 
           Examples:
+            switch_db rm feature1
             switch_db store feature1 --database_names db1,db2,db3
             switch_db restore feature1
       BANNER
