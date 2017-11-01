@@ -54,7 +54,7 @@ module SwitchDb
         when 'cache_dir'
           @cache_dir = Pathname.new(File.expand_path(cache_dir))
         else
-          public_send("#{key}=", value)
+          public_send("#{key}=", value) if respond_to?("#{key}=")
         end
       end
     rescue Errno::ENOENT
