@@ -1,13 +1,9 @@
 module SwitchDb
   module Command
-    class Restore
+    class Restore < Base
       attr_reader :reference
 
-      def initialize(reference)
-        @reference = reference
-      end
-
-      def restore!
+      def restore!(reference)
         reference.database_names.each do |database_name|
           `mysql -u root -p --execute="DROP DATABASE #{database_name}"`
           `mysql -u root -p --execute="CREATE DATABASE #{database_name}"`

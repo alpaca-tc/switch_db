@@ -13,6 +13,8 @@ RSpec.describe SwitchDb do
       end
 
       it 'calls command' do
+        require 'pry'
+        binding.pry;
         expect_any_instance_of(described_class::Cli).to receive(:initialize).with('list', {})
         subject
       end

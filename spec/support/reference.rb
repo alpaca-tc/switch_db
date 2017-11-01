@@ -9,11 +9,11 @@ Module.new do
     root_dir.join('tmp')
   end
 
-  def temporary_reference
-    SwitchDb::Reference.new(name: 'temporary', database_names: 'database_name')
-  end
-
   RSpec.configure do |config|
     config.include(self)
+
+    config.before do
+      allow_any_instance_of(SwitchDb::Configuration).to receive(:cache_dir).and_return(tmp_dir)
+    end
   end
 end
