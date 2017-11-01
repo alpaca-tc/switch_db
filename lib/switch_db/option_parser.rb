@@ -47,7 +47,7 @@ module SwitchDb
       <<~BANNER
         switch_db v#{SwitchDb::VERSION}
 
-        switch_db is a database dupfile manager. This is a basic help message.
+        switch_db is a database dumpfile manager. This is a basic help message.
           Usage:
             switch_db list
             switch_db config [key:value...]
