@@ -9,7 +9,7 @@ RSpec.describe SwitchDb::Configuration do
 
     describe '#cache_dir' do
       subject { instance.cache_dir }
-      it { is_expected.to eq(Pathname.new(File.expand_path('~/.cache/switch_db'))) }
+      it { is_expected.to eq(tmp_dir) }
     end
   end
 end
