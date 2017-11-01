@@ -8,6 +8,7 @@ require 'switch_db/reference_set'
 require 'switch_db/utils'
 require 'switch_db/version'
 require 'switch_db/command'
+require 'switch_db/database'
 
 module SwitchDb
   def self.configuration
