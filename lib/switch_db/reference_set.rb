@@ -44,7 +44,7 @@ module SwitchDb
 
     def to_h
       {
-        references: references.map(&:to_h)
+        references: references.values.map(&:to_h)
       }
     end
 
