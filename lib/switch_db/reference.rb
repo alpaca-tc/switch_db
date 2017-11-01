@@ -20,5 +20,12 @@ module SwitchDb
         full_path.join("#{Utils.escape_filename(database_name)}.sql")
       end
     end
+
+    def to_h
+      {
+        name: name,
+        database_names: database_names
+      }
+    end
   end
 end

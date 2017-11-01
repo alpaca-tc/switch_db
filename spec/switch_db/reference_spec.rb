@@ -28,5 +28,10 @@ RSpec.describe SwitchDb::Reference do
 
       it { is_expected.to eq(expected_database_paths) }
     end
+
+    describe '#to_h' do
+      subject { instance.to_h }
+      it { is_expected.to eq(name: 'name', database_names: %w(db1 db2)) }
+    end
   end
 end
