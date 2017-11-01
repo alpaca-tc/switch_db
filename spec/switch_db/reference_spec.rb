@@ -21,9 +21,9 @@ RSpec.describe SwitchDb::Reference do
 
       let(:expected_database_paths) do
         [
-          SwitchDb.configuration.cache_dir.join('name', 'db1.sql'),
-          SwitchDb.configuration.cache_dir.join('name', 'db2.sql'),
-        ]
+          ['db1', SwitchDb.configuration.cache_dir.join('name', 'db1.sql')],
+          ['db2', SwitchDb.configuration.cache_dir.join('name', 'db2.sql')],
+        ].to_h
       end
 
       it { is_expected.to eq(expected_database_paths) }

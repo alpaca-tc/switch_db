@@ -16,9 +16,9 @@ module SwitchDb
     end
 
     def database_paths
-      @database_names.map do |database_name|
-        full_path.join("#{Utils.escape_filename(database_name)}.sql")
-      end
+      @database_names.map { |database_name|
+        [database_name, full_path.join("#{Utils.escape_filename(database_name)}.sql")]
+      }.to_h
     end
 
     def to_h
