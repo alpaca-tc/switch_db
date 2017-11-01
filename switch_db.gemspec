@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['alpaca-tc']
   spec.email         = ['alpaca-tc@alpaca.tc']
 
-  spec.summary       = 'Write a short summary, because Rubygems requires one.'
-  spec.description   = 'Write a longer description or delete this line.'
+  spec.summary       = 'A command-line interface for a database dumpfile'
+  spec.description   = 'This cli provides a way to load/dump database in development environment'
   spec.homepage      = 'https://github.com/alpaca-tc/switch_db'
   spec.license       = 'MIT'
 

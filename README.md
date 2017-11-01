@@ -1,38 +1,44 @@
 # SwitchDb
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/switch_db`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A command-line interface for a database dumpfile
 
 ## Installation
 
-Add this line to your application's Gemfile:
+```sh
+git clone https://github.com/alpaca-tc/switch_db
+cd switch_db
 
-```ruby
-gem 'switch_db'
+bundle install
+bundle exec rake install
 ```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install switch_db
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+# Show dumpfile list
+switch_db list
+
+# Change user_name and as so on
+switch_db config [key:value...]
+
+# Remove dumpfile
+switch_db rm <name>
+
+# Store database
+switch_db store <name> --database_names [database_names...]
+
+# Restore database
+switch_db restore <name>
+```
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+After checking out the repo, run `bundle install` to install dependencies. Then, run `rake spec` to run the tests.
+To install this gem onto your local machine, run `bundle exec rake install`.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/switch_db.
+Bug reports and pull requests are welcome on GitHub at https://github.com/alpaca-tc/switch_db.
 
 ## License
 
