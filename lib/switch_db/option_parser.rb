@@ -16,8 +16,6 @@ module SwitchDb
       @args
     end
 
-    private
-
     def option_parser
       ::OptionParser.new do |parser|
         parser.banner = banner
@@ -27,6 +25,8 @@ module SwitchDb
         end
       end
     end
+
+    private
 
     def banner
       <<~BANNER

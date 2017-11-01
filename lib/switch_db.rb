@@ -16,9 +16,13 @@ module SwitchDb
   end
 
   def self.run(argv)
-    args = OptionParser.new(argv).parse!
+    option_parser = SwitchDb::OptionParser.new(argv)
+    args = option_parser.parse!
     command = args.delete(:command)
 
     Cli.run!(command, args)
+  rescue SwitchDb::CommandNotFound => error
+    $stderr.puts(error.message)
+    $stderr.puts(option_parser.option_parser.banner)
   end
 end
