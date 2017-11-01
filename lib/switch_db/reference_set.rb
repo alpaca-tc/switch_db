@@ -3,52 +3,53 @@ require 'yaml'
 
 module SwitchDb
   class ReferenceSet
-    attr_reader :references
+    attr_reader :configuration_path, :references
 
-    def initialize(path, references = [])
-      @path = path
-      @references = references
+    def initialize(configuration_path)
+      @configuration_path = configuration_path
+      @references = {}
     end
 
-    def self.parse_reference_set!(path)
-      yaml = YAML.load_file(path)
+    def self.load_file(configuration_path)
+      new(configuration_path).tap do |instance|
+        yaml = YAML.load_file(configuration_path)
 
-      references = (yaml[:references] || []).map do |reference|
-        Reference.new(name: reference[:name], database_names: reference[:database_names], metadata: reference[:metadata])
+        (yaml[:references] || []).map do |reference|
+          reference = Reference.new(
+            name: reference[:name],
+            database_names: reference[:database_names]
+          )
+
+          instance.add_reference(reference)
+        end
       end
-
-      new(path, references)
     rescue Errno::ENOENT
-      puts "No such file or directory - #{path}"
-      new(path)
+      new(configuration_path)
     end
 
     def add_reference(reference)
-      @references.push(reference)
+      @references[reference.name] = reference
     end
 
     def remove_reference(reference)
-      @references.delete(reference)
+      @references.delete(reference.name)
     end
 
-    def find_by_name(name)
-      @references.find { |reference| reference.name == name }
+    def write_reference_set
+      FileUtils.mkdir_p(configuration_directory)
+      File.write(@configuration_path, to_h.to_yaml)
     end
 
-    def write_reference_set!
-      FileUtils.mkdir_p(File.dirname(@path))
+    private
 
-      content = {}
+    def to_h
+      {
+        references: references.map(&:to_h)
+      }
+    end
 
-      content[:references] = references.map do |reference|
-        {
-          name: reference.name,
-          database_names: reference.database_names,
-          metadata: reference.metadata
-        }
-      end
-
-      File.write(@path, content.to_yaml)
+    def configuration_directory
+      File.dirname(@configuration_path)
     end
   end
 end
