@@ -16,8 +16,10 @@ module SwitchDb
       SwitchDb.configuration.cache_dir.join(path)
     end
 
-    def database_path(database_name)
-      full_path.join("#{Utils.escape_filename(database_name)}.sql")
+    def database_paths
+      @database_names.map do |database_name|
+        full_path.join("#{Utils.escape_filename(database_name)}.sql")
+      end
     end
   end
 end
