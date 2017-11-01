@@ -2,13 +2,17 @@ module SwitchDb
   module Command
     class List < Base
       def run(*)
-        puts 'none' if @reference_set.references.empty?
+        length = @reference_set.references.size.to_s.length
 
-        @reference_set.references.each do |_, reference|
-          puts "* #{reference.name}"
+        @reference_set.references.each_with_index do |(_, reference), index|
+          puts "#{format_index(length, index)}: #{reference.name}"
         end
+      end
 
-        puts ''
+      private
+
+      def format_index(length, index)
+        format("%#{length}d", index)
       end
     end
   end
