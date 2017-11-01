@@ -22,7 +22,7 @@ RSpec.describe SwitchDb::Reference do
       let(:expected_database_paths) do
         [
           ['db1', SwitchDb.configuration.cache_dir.join('name', 'db1.sql')],
-          ['db2', SwitchDb.configuration.cache_dir.join('name', 'db2.sql')],
+          ['db2', SwitchDb.configuration.cache_dir.join('name', 'db2.sql')]
         ].to_h
       end
 
@@ -31,7 +31,7 @@ RSpec.describe SwitchDb::Reference do
 
     describe '#to_h' do
       subject { instance.to_h }
-      it { is_expected.to eq(name: 'name', database_names: %w(db1 db2)) }
+      it { is_expected.to eq(name: 'name', database_names: %w[db1 db2]) }
     end
   end
 end

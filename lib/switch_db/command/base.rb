@@ -5,7 +5,7 @@ module SwitchDb
         @reference_set = reference_set
       end
 
-      def run(arguments = {})
+      def run(_arguments = {})
         raise NotImplementedError, 'not implemented yet'
       end
     end

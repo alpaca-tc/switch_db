@@ -30,17 +30,13 @@ module SwitchDb
 
     def banner
       <<~BANNER
-
         switch_db v#{SwitchDb::VERSION}
-
         switch_db is a snapshot database manager. This is a basic help message.
-
           Usage:
             switch_db list
             switch_db rm <name>
             switch_db store <name> --database_names [database_names...]
             switch_db restore <name>
-
           Examples:
             switch_db rm feature1
             switch_db store feature1 --database_names db1,db2,db3
