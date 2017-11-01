@@ -12,11 +12,6 @@ RSpec.describe SwitchDb::Configuration do
       it { is_expected.to eq('root') }
     end
 
-    describe '#password' do
-      subject { instance.password }
-      it { is_expected.to eq('') }
-    end
-
     describe '#cache_dir' do
       subject { instance.cache_dir }
       it { is_expected.to eq(tmp_dir) }
