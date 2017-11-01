@@ -24,7 +24,7 @@ module SwitchDb
     def to_h
       {
         reference_set_file: reference_set_file,
-        user_name: user_name,
+        user_name: user_name
       }
     end
 
