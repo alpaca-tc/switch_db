@@ -1,11 +1,10 @@
 module SwitchDb
   class Reference
-    attr_reader :name, :database_names, :metadata
+    attr_reader :name, :database_names
 
-    def initialize(name:, database_names: [], metadata: {})
+    def initialize(name:, database_names: [])
       @name = name
       @database_names = database_names
-      @metadata = metadata
     end
 
     def path
