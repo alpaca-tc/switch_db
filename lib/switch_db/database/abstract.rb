@@ -12,6 +12,10 @@ module SwitchDb
       def import_database(database_name, database_path)
         raise NotImplementedError
       end
+
+      def dump_database(database_name, output_path)
+        raise NotImplementedError
+      end
     end
   end
 end

@@ -2,28 +2,27 @@ require 'fileutils'
 
 module SwitchDb
   module Command
-    class Store
-      attr_reader :reference
+    class Store < Base
+      def run(name:, database_names: [])
+        reference = SwitchDb::Reference.new(name: name, database_names: database_names)
+        duplicated = @reference_set.references.key?(reference.name)
 
-      def initialize(reference)
-        @reference = reference
-      end
-
-      def store!
         FileUtils.mkdir_p(reference.full_path)
 
-        reference.database_names.each do |database_name|
-          full_path = reference.database_path(database_name)
-          next if File.exist?(full_path) && !overwrite?
+        reference.database_paths.each do |database_name, database_path|
+          next if duplicated && !overwrite?(reference)
 
-          `mysqldump -u root -p #{database_name} > #{full_path}`
+          SwitchDb::Database.current_database.dump_database(database_name, database_path)
+          puts "Stored database a '#{database_name}'"
         end
+
+        @reference_set.add_reference(reference)
       end
 
       private
 
-      def overwrite?
-        Dialog.question?("Overwrite existing file? #{reference.name}")
+      def overwrite?(reference)
+        Dialog.question?("Overwrite existing stored file? (#{reference.name})")
       end
     end
   end

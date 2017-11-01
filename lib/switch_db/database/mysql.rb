@@ -14,6 +14,10 @@ module SwitchDb
       def self.import_database(database_name, database_path)
         `mysql -u root -p #{database_name} < #{database_path}`
       end
+
+      def self.dump_database(database_name, output_path)
+        `mysqldump -u root -p #{database_name} > #{output_path}`
+      end
     end
   end
 end
