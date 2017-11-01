@@ -15,6 +15,10 @@ module SwitchDb
     @configuration ||= Configuration.new
   end
 
+  def self.configuration=(value)
+    @configuration = value
+  end
+
   def self.run(argv)
     option_parser = SwitchDb::OptionParser.new(argv)
     args = option_parser.parse!

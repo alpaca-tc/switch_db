@@ -3,12 +3,8 @@ module SwitchDb
     class << self
       def run!(command, arguments = {})
         command_class = command_for(command)
-
-        path = SwitchDb.configuration.cache_dir.join(SwitchDb.configuration.reference_set_filename)
-        reference_set = ReferenceSet.load_file(path)
-
+        reference_set = ReferenceSet.load_file(SwitchDb.configuration.reference_set_file_full_path)
         command_class.new(reference_set: reference_set).run(arguments)
-
         reference_set.write_reference_set
       end
 

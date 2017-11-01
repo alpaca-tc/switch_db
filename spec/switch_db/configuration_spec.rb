@@ -2,9 +2,19 @@ RSpec.describe SwitchDb::Configuration do
   describe 'InstanceMethods' do
     let(:instance) { described_class.new }
 
-    describe '#reference_set_filename' do
-      subject { instance.reference_set_filename }
-      it { is_expected.to eq('.switch_db.yml') }
+    describe '#reference_set_file' do
+      subject { instance.reference_set_file }
+      it { is_expected.to eq('reference_set.yml') }
+    end
+
+    describe '#user_name' do
+      subject { instance.user_name }
+      it { is_expected.to eq('root') }
+    end
+
+    describe '#password' do
+      subject { instance.password }
+      it { is_expected.to eq('') }
     end
 
     describe '#cache_dir' do
