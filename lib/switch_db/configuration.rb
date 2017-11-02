@@ -7,12 +7,14 @@ module SwitchDb
     attr_reader :cache_dir
     attr_accessor :reference_set_file
     attr_accessor :user_name
+    attr_accessor :password
 
     def initialize
       @config_file = 'config.yml'
       @reference_set_file = 'reference_set.yml'
       @cache_dir = Pathname.new(File.expand_path('~/.cache/switch_db'))
       @user_name = 'root'
+      @password = nil
 
       load_from_config_file(configuration_full_path)
     end
