@@ -2,45 +2,93 @@ require 'optparse'
 
 module SwitchDb
   class OptionParser
+    REQUIRED_KEYS = {
+      store: %i[name --database_names],
+      restore: [:name],
+      rm: [:name],
+      list: []
+    }.freeze
+
     def initialize(argv)
       @original_argv = argv
-      @argv = argv.clone
-      @args = {}
+      @options = {}
     end
 
-    def parse!
-      option_parser.parse!(@argv)
+    def parse!(argv = @original_argv.clone)
+      @options[:command] = argv[0]
 
-      if @argv[0] == 'config'
-        @args[:command] = 'config'
-        parse_config_argv(@argv)
+      # rubocop:disable Lint/EmptyWhen
+      case @options[:command]
+      when 'list'
+        # Do nothing
+      when 'config'
+        parse_config_argv(argv[1..-1])
+      when 'store', 'restore', 'rm'
+        @options[:name] = argv[1]
+        parse_argv(argv)
       else
-        @args[:command] = @argv.shift if @argv[0]
-        @args[:name] = @argv.shift if @argv[0]
+        parse_argv(argv)
       end
+      # rubocop:enable Lint/EmptyWhen
 
-      @args
-    end
+      validate_option!
 
-    def option_parser
-      ::OptionParser.new do |parser|
-        parser.banner = banner
-
-        parser.on('--database_names DATABASE_NAMES', 'database names') do |database_names|
-          @args[:database_names] = database_names.split(/(?:,|\s+)/)
-        end
-      end
+      @options
     end
 
     private
+
+    def validate_option!
+      required_keys = REQUIRED_KEYS[@options[:command].to_s.to_sym]
+
+      if required_keys.nil?
+        print_error("'#{@options[:command]}' is unknown command.")
+      elsif required_keys.include?(:name) && @options[:name].to_s.empty?
+        print_error("<name> is empty.")
+      else
+        required_keys.select { |name| name.to_s.start_with?('--') }.each do |name|
+          name = name.to_s.gsub(/^--/, '').to_sym
+          value = @options[name]
+          print_error("'--#{name}' option is empty.") if value.nil? || value.empty?
+        end
+      end
+    end
 
     def parse_config_argv(argv)
       key_values = argv.select { |key_value| key_value.include?(':') }
 
       key_values.each do |key_value|
         key, value = key_value.split(':')
-        @args[key.to_sym] = value.to_s
+        @options[key.to_sym] = value.to_s
       end
+    end
+
+    def parse_argv(argv)
+      argv.each_with_index do |raw_key, index|
+        next unless raw_key.start_with?('--')
+
+        key = raw_key.gsub(/^--/, '')
+        next_index = index + 1
+        value = argv[next_index] unless argv[next_index].to_s.start_with?('--')
+        parse_option(key, value)
+      end
+    end
+
+    def parse_option(option_name, value)
+      case option_name
+      when 'database_names'
+        @options[:database_names] = value.to_s.split(/(?:,|\s+)/)
+      when 'help'
+        puts banner
+        exit
+      else
+        print_error("'--#{option_name}' is unknown option.")
+      end
+    end
+
+    def print_error(message)
+      $stderr.puts("switch_db: #{message} See 'switch_db --help'")
+      exit
     end
 
     def banner
@@ -52,7 +100,7 @@ module SwitchDb
             switch_db list
             switch_db config [key:value...]
             switch_db rm <name>
-            switch_db store <name> --database_names [database_names...]
+            switch_db store <name> --database_names [database_name,database_name...]
             switch_db restore <name>
 
           Examples:

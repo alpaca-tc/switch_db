@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "switch_db"
+require 'pry'
 
 Dir[File.expand_path('../support/**/*.rb', __FILE__)].each do |file|
   require(file)

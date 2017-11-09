@@ -1,9 +1,11 @@
 RSpec.describe SwitchDb::OptionParser do
   describe 'InstanceMethods' do
     describe '#parse!' do
+      subject { instance.parse! }
+      let(:instance) { described_class.new(argv) }
+
       shared_examples_for 'a option parser' do |from, to|
-        subject { instance.parse! }
-        let(:instance) { described_class.new(from) }
+        let(:argv) { from }
         it { is_expected.to eq(to) }
       end
 
@@ -27,6 +29,22 @@ RSpec.describe SwitchDb::OptionParser do
         command: 'config',
         username: 'alpaca-tc',
         password: ''
+
+      context 'invalid option' do
+        before do
+          allow(instance).to receive(:exit).and_return(nil)
+        end
+
+        context 'given --unknown' do
+          let(:argv) { %w[store test --unknown option] }
+          it { expect { subject }.to output(/switch_db: '--unknown' is unknown option./).to_stderr }
+        end
+
+        context 'given --database_names and ' do
+          let(:argv) { %w[store test --database_names] }
+          it { expect { subject }.to output(/'--database_names' option is empty./).to_stderr }
+        end
+      end
     end
   end
 end
