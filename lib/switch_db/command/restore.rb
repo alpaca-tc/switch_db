@@ -5,7 +5,11 @@ module SwitchDb
 
       def run(name:, **)
         reference = @reference_set.references[name.to_s]
-        return unless reference
+
+        unless reference
+          $stderr.puts("#{name} not exists")
+          exit
+        end
 
         database = SwitchDb::Database.current_database
 
