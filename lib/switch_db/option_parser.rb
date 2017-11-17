@@ -3,6 +3,7 @@ require 'optparse'
 module SwitchDb
   class OptionParser
     REQUIRED_KEYS = {
+      config: [],
       store: %i[name --database_names],
       restore: [:name],
       rm: [:name],
