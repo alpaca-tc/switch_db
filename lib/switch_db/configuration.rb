@@ -26,7 +26,8 @@ module SwitchDb
     def to_h
       {
         reference_set_file: reference_set_file,
-        user_name: user_name
+        user_name: user_name,
+        password: password
       }
     end
 
@@ -39,6 +40,7 @@ module SwitchDb
       %i[
         reference_set_file
         user_name
+        password
       ]
     end
 
