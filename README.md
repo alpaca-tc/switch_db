@@ -25,10 +25,42 @@ switch_db config [key:value...]
 switch_db rm <name>
 
 # Store database
-switch_db store <name> --database_names [database_names...]
+switch_db store <name> --database_names [database_name,database_name...]
 
 # Restore database
 switch_db restore <name>
+```
+
+Example
+
+```
+# Show list
+$ switch_db list
+0: initial_database
+1: new_feature
+2: latest_database
+
+$ echo $(git rev-parse --abbrev-ref HEAD)
+master
+
+# Store databases
+$ switch_db store $(git rev-parse --abbrev-ref HEAD) --database_names application_development,application_test
+Stored database a 'application_development'
+Stored database a 'application_test'
+
+$ switch_db list
+0: initial_database
+1: new_feature
+2: latest_database
+3: master
+
+# Restore databases
+$ switch_db restore master
+Restored database a 'application_development'
+Restored database a 'application_test'
+
+# Set default username and password
+switch_db config user_name:root password:password
 ```
 
 ## Development
