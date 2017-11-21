@@ -4,6 +4,14 @@ A command-line interface for a database dumpfile
 
 ## Installation
 
+### from rubygems
+
+```
+gem install switch_db
+```
+
+### from github
+
 ```sh
 git clone https://github.com/alpaca-tc/switch_db
 cd switch_db
